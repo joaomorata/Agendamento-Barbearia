@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Gerson Barber"
+description = "Página pública premium para a Gerson Barber, com serviços, equipe, localização e fluxo de agendamento mobile-first."
+version = "1.0.0"
+id = "artifacts/gerson-barber"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22547
+
+[services.development]
+run = "pnpm --filter @workspace/gerson-barber run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/gerson-barber", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/gerson-barber/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22547"
+BASE_PATH = "/"
